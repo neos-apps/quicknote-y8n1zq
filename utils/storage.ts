@@ -140,6 +140,7 @@ async function createTag(
     name: data.name,
     color: data.color,
     createdAt: now(),
+    updatedAt: now(),
   };
   await AsyncStorage.setItem(KEYS.TAGS, JSON.stringify([...tags, tag]));
   return tag;
@@ -152,7 +153,7 @@ async function updateTag(
   const tags = await getTags();
   const index = tags.findIndex((t) => t.id === id);
   if (index === -1) return undefined;
-  const updated: Tag = { ...tags[index], ...data };
+  const updated: Tag = { ...tags[index], ...data, updatedAt: now() };
   tags[index] = updated;
   await AsyncStorage.setItem(KEYS.TAGS, JSON.stringify(tags));
   return updated;
